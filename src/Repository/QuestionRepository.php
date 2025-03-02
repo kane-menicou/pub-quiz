@@ -12,6 +12,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Contracts\Cache\CacheInterface;
+use function base64_encode;
 use function dd;
 
 class QuestionRepository
@@ -25,10 +26,14 @@ class QuestionRepository
         return $this->getAllQuestionsForQuiz($quiz)[$quiz->getCurrentQuestion()] ?? null;
     }
 
+    /**
+     * @param Quiz $quiz
+     * @return Question[]
+     */
     public function getAllQuestionsForQuiz(Quiz $quiz): array
     {
         $questionSet = $quiz->getQuestionSet();
-        return $this->cache->get("questionSet_$questionSet", function () use ($questionSet): array {
+        return $this->cache->get(base64_encode("questionSet_$questionSet"), function () use ($questionSet): array {
             $raw = Yaml::parseFile($questionSet)['questions'] ?? [];
 
             $questions = [];

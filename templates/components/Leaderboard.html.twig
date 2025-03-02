@@ -1,0 +1,8 @@
+<div{{ attributes }}>
+    <ul>
+        {% for currentScore in this.currentScores %}
+            {{ currentScore.participant.name }}
+            {{ currentScore.score }}
+        {% endfor %}
+    </ul>
+</div>

@@ -1,7 +1,7 @@
 <div{{ attributes }} data-poll="delay(500)|$render">
-    <span>{{ this.quiz.secondsRemaining }}</span>
-    <span>{{ this.quiz.countAnswered }}/{{ this.quiz.participants.count }}</span>
     {% if not this.quiz.isCurrentQuestionFinished %}
+        <span>{{ this.quiz.secondsRemaining }}</span>
+        <span>{{ this.quiz.countAnswered }}/{{ this.quiz.participants.count }}</span>
         <h1>{{ this.question.question }}</h1>
         {% for answers in this.question.answers|batch(2) %}
             <ul class="list-group list-group-horizontal">
@@ -14,10 +14,13 @@
         {% for answerBatch in this.answerBreakdownToCurrentQuestion|batch(2) %}
             <ui class="list-group list-group-horizontal">
                 {% for answer in answerBatch %}
-                    <li class="list-group-item"><span class="badge bg-primary">{{ answer.chosenBy|length }}</span> {{ answer.answer.content|default('No answer') }}</li>
+                    <li class="list-group-item">
+                        <span class="badge {% if answer.answer.correct|default(false) %}bg-success{% else %}bg-primary{% endif %}">{{ answer.chosenBy|length }}</span> {{ answer.answer.content|default("Didn't Answer") }}
+                    </li>
                 {% endfor %}
             </ui>
         {% endfor %}
+        <twig:Leaderboard quiz="{{ quiz }}"/>
         {% if not this.lastQuestion %}
             <button class="btn btn-primary" data-action="live#action" data-live-action-param="nextPage">Next</button>
         {% else %}

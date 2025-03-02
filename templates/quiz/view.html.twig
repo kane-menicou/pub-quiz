@@ -16,5 +16,6 @@
 
     {% if quiz.isComplete() %}
         <h1>Quiz Complete!</h1>
+        <twig:Leaderboard quiz="{{ quiz }}" />
     {% endif %}
 {% endblock %}

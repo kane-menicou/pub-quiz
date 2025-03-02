@@ -5,7 +5,7 @@ questions:
             correct: false
           - content: 'something else'
             correct: false
-          - content: 'another something'
+          - content: 'another something (correct)'
             correct: true
           - content: 'FOOBAR'
             correct: false
