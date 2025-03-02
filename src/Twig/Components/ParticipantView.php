@@ -52,11 +52,12 @@ final class ParticipantView
 
     public function addAnswer(): void
     {
-        foreach ($this->questionRepository->getCurrentQuestionForQuiz($this->participant->getQuiz())->answers as $index => $answer) {
+        $quiz = $this->participant->getQuiz();
+        foreach ($this->questionRepository->getCurrentQuestionForQuiz($quiz)->answers as $index => $answer) {
             if ($answer->content === $this->lastAnswer) {
                 $this->lastAnswer = null;
 
-                $this->participant->addAnswer($this->participant->getQuiz()->getCurrentQuestion(), $index);
+                $this->participant->addAnswer($quiz->getCurrentQuestion(), $index);
             }
         }
 
