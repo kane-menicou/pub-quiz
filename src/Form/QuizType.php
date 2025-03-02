@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Entity\Quiz;
+use App\Repository\QuestionRepository;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Form\AbstractType;
@@ -19,7 +20,7 @@ use function range;
 
 class QuizType extends AbstractType
 {
-    public function __construct(#[Autowire('%kernel.project_dir%')] private readonly string $projectDir)
+    public function __construct(private readonly QuestionRepository $questionRepository)
     {
     }
 
@@ -30,7 +31,7 @@ class QuizType extends AbstractType
                 'data' => $this->generateRandomFriendlyId(),
             ])
             ->add('questionSet', ChoiceType::class, [
-                'choices' => $this->allQuestionSets(),
+                'choices' => $this->questionRepository->listAllQuestionSets(),
             ])
             ->add('secondsPerQuestion', ChoiceType::class, [
                 'choices' => [
@@ -63,17 +64,5 @@ class QuizType extends AbstractType
         }
 
         return implode('', $output);
-    }
-
-    private function allQuestionSets(): array
-    {
-        $questionSets = (new Finder())->in($this->projectDir)->path('questions')->name(['*.yaml', '*.yml']);
-
-        $names = [];
-        foreach ($questionSets as $questionSet) {
-            $names[$questionSet->getFilename()] = $questionSet->getRealPath();
-        }
-
-        return $names;
     }
 }

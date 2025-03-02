@@ -133,6 +133,11 @@ class Quiz
         $this->lastQuestionStart = new DateTimeImmutable();
     }
 
+    public function complete(): void
+    {
+        $this->state = QuizState::Complete;
+    }
+
     public function getCurrentQuestion(): int
     {
         return $this->currentQuestion;
@@ -187,5 +192,10 @@ class Quiz
     public function setSecondsPerQuestion(int $secondsPerQuestion): void
     {
         $this->secondsPerQuestion = $secondsPerQuestion;
+    }
+
+    public function isComplete(): bool
+    {
+        return $this->state === QuizState::Complete;
     }
 }

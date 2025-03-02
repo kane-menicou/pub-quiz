@@ -11,10 +11,17 @@
         </ul>
         {% endfor %}
     {% else %}
-        <ui>
-            {% for participant in this.quiz.participants %}
-                <li>{{ participant.getAnswerToQuestion(this.quiz.currentQuestion) }}</li>
-            {% endfor %}
-        </ui>
+        {% for answerBatch in this.answerBreakdownToCurrentQuestion|batch(2) %}
+            <ui class="list-group list-group-horizontal">
+                {% for answer in answerBatch %}
+                    <li class="list-group-item"><span class="badge bg-primary">{{ answer.chosenBy|length }}</span> {{ answer.answer.content|default('No answer') }}</li>
+                {% endfor %}
+            </ui>
+        {% endfor %}
+        {% if not this.lastQuestion %}
+            <button class="btn btn-primary" data-action="live#action" data-live-action-param="nextPage">Next</button>
+        {% else %}
+            <a class="btn btn-primary" data-action="live#action" data-live-action-param="nextPage">Finish</a>
+        {% endif %}
     {% endif %}
 </div>

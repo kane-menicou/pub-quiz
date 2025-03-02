@@ -3,6 +3,8 @@
 {% block body %}
     {{ form_start(form) }}
     {{ form_rest(form) }}
-    <input type="submit">
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <input type="submit" class="btn btn-primary" value="Create Quiz"/>
+    </div>
     {{ form_end(form) }}
 {% endblock %}

@@ -2,10 +2,4 @@
 
 {% block body %}
     <twig:BigScreen quiz="{{ quiz }}"/>
-    {% if quiz.currentQuestionFinished %}
-        {{ form_start(nextQuestion) }}
-        {{ form_rest(nextQuestion) }}
-        <input type="submit" value="Next">
-        {{ form_end(nextQuestion) }}
-    {% endif %}
 {% endblock %}

@@ -8,17 +8,19 @@ use App\Entity\Quiz;
 use App\Entity\QuizState;
 use App\Form\QuizType;
 use App\Form\StartQuizType;
+use App\Repository\QuestionRepository;
 use App\Repository\QuizRepository;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use function count;
 
 #[Route('/quizes')]
 class QuizController extends AbstractController
 {
-    public function __construct(private readonly QuizRepository $repository)
+    public function __construct(private readonly QuizRepository $repository, private readonly QuestionRepository $questionRepository)
     {
     }
 

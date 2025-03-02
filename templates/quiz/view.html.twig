@@ -1,14 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Join now using code: <span class="badge bg-primary">{{ quiz.friendlyId }}</span></h1>
+    {% if quiz.inLobby %}
+        <h1>Join now using code: <span class="badge bg-primary">{{ quiz.friendlyId }}</span></h1>
 
-    <twig:ParticipantsList quiz="{{ quiz }}"/>
+        <twig:ParticipantsList quiz="{{ quiz }}"/>
 
-    {{ form_start(startForm) }}
-    {{ form_rest(startForm) }}
-    <div class="d-grid gap-2 col-6 mx-auto">
-        <input type="submit" class="btn btn-primary" value="Start"/>
-    </div>
-    {{ form_end(startForm) }}
+        {{ form_start(startForm) }}
+        {{ form_rest(startForm) }}
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <input type="submit" class="btn btn-primary" value="Start"/>
+        </div>
+        {{ form_end(startForm) }}
+    {% endif %}
+
+    {% if quiz.isComplete() %}
+        <h1>Quiz Complete!</h1>
+    {% endif %}
 {% endblock %}
