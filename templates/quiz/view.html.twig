@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ quiz.friendlyId }}</h1>
+
+    <twig:ParticipantsList quiz="{{ quiz }}"/>
+
+    {{ form_start(startForm) }}
+    {{ form_rest(startForm) }}
+    <input type="submit"/>
+    {{ form_end(startForm) }}
+{% endblock %}

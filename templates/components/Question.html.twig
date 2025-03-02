@@ -1,0 +1,19 @@
+<div{{ attributes }} data-poll="delay(500)|$render">
+    <span>{{ this.secondsRemaining }}</span>
+    <span>{{ this.countAnswered }}/{{ this.quiz.participants.count }}</span>
+    {% if this.secondsRemaining != 0 and this.countAnswered != this.quiz.participants.count %}
+        <h1>{{ this.question.question }}</h1>
+        <ul>
+            {% for answer in this.question.answers %}
+                <li>{{ answer.content }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <ui>
+            {% for participant in this.quiz.participants %}
+                <li>{{ participant.getAnswerToQuestion(this.quiz.currentQuestion) }}</li>
+            {% endfor %}
+        </ui>
+
+    {% endif %}
+</div>

@@ -1,0 +1,7 @@
+<div {{ attributes }} data-poll="delay(500)|$render">
+    <ul>
+        {% for participant in this.participants %}
+            <li>{{ participant.name }}</li>
+        {% endfor %}
+    </ul>
+</div>

@@ -1,0 +1,11 @@
+questions:
+    - question: 'test'
+      answers:
+          - content: 'something'
+            correct: false
+          - content: 'something else'
+            correct: false
+          - content: 'another something'
+            correct: true
+          - content: 'FOOBAR'
+            correct: false
