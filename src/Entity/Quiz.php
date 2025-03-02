@@ -16,7 +16,7 @@ class Quiz
 {
     public const int FRIENDLY_ID_LENGTH = 6;
 
-    public const int SECONDS_PER_QUESTION = 20;
+    public const int SECONDS_PER_QUESTION = 120;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -43,6 +43,9 @@ class Quiz
 
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $lastQuestionStart;
+
+    #[ORM\Column(type: 'integer')]
+    private int $secondsPerQuestion = 0;
 
     public function __construct()
     {
@@ -164,5 +167,25 @@ class Quiz
     public function isCurrentQuestionFinished(): bool
     {
         return $this->getSecondsRemaining() === 0 || $this->getCountAnswered() === $this->participants->count();
+    }
+
+    public function isInLobby(): bool
+    {
+        return $this->state === QuizState::Lobby;
+    }
+
+    public function isAnsweringQuestions(): bool
+    {
+        return $this->state === QuizState::Questions;
+    }
+
+    public function getSecondsPerQuestion(): int
+    {
+        return $this->secondsPerQuestion;
+    }
+
+    public function setSecondsPerQuestion(int $secondsPerQuestion): void
+    {
+        $this->secondsPerQuestion = $secondsPerQuestion;
     }
 }

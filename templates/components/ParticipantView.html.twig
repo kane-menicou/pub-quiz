@@ -1,0 +1,24 @@
+<div{{ attributes }}
+        data-poll="delay({{ this.pollingDelayMs }})|$render">
+    {% if this.participant.quiz.inLobby %}
+        Welcome {{ this.participant.name }}!
+    {% endif %}
+
+    {% if this.pendingCurrentQuestion is not null %}
+        {% for answerBatch in this.pendingCurrentQuestion.answers|batch(2) %}
+            <div class="list-group list-group-horizontal">
+                {% for answer in answerBatch %}
+                    <label class="list-group-item">
+                        <input
+                                class="form-check-input me-1"
+                                type="radio"
+                                name="answer"
+                                value="{{ answer.content }}"
+                                aria-label="{{ answer.content }}" data-model="on(change)|lastAnswer">
+                        {{ answer.content }}
+                    </label>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>

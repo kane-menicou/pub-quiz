@@ -32,6 +32,17 @@ class QuizType extends AbstractType
             ->add('questionSet', ChoiceType::class, [
                 'choices' => $this->allQuestionSets(),
             ])
+            ->add('secondsPerQuestion', ChoiceType::class, [
+                'choices' => [
+                    '20 Seconds (Recommended)' => 20,
+                    '5 Seconds' => 10,
+                    '10 Seconds' => 10,
+                    '30 Seconds' => 30,
+                    '1 Minute' => 60,
+                    '5 Minutes' => 300,
+                    '59 Minutes' => 3_540,
+                ],
+            ])
         ;
     }
 

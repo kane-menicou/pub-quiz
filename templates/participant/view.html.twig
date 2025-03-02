@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    Welcome {{ participant.name }}
+    <twig:ParticipantView participant="{{ participant }}" />
 {% endblock %}
 

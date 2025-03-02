@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Twig\Components;
 
+use App\Entity\Question;
 use App\Entity\Quiz;
-use DateTimeImmutable;
+use App\Repository\QuestionRepository;
 use Psr\Clock\ClockInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Yaml\Yaml;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
+use function dd;
 
 #[AsLiveComponent]
 final class BigScreen
@@ -19,12 +21,12 @@ final class BigScreen
     #[LiveProp]
     public Quiz $quiz;
 
-    public function __construct(private readonly ClockInterface $clock)
+    public function __construct(private readonly ClockInterface $clock, private readonly QuestionRepository $questionRepository)
     {
     }
 
-    public function getQuestion(): array
+    public function getQuestion(): Question
     {
-        return Yaml::parseFile($this->quiz->getQuestionSet())['questions'][$this->quiz->getCurrentQuestion()] ?? throw new NotFoundHttpException("No Question {$this->quiz->getCurrentQuestion()} for Quiz {$this->quiz->getFriendlyId()}");
+        return $this->questionRepository->getCurrentQuestionForQuiz($this->quiz);
     }
 }
