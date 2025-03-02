@@ -9,6 +9,7 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use function max;
 
 #[ORM\Entity(repositoryClass: QuizRepository::class)]
 class Quiz
@@ -137,5 +138,31 @@ class Quiz
     public function getLastQuestionStart(): DateTimeImmutable
     {
         return $this->lastQuestionStart;
+    }
+
+    public function getSecondsRemaining(): int
+    {
+        $diff = (new DateTimeImmutable())->diff($this->lastQuestionStart);
+
+        $secondsRemaining = Quiz::SECONDS_PER_QUESTION - ($diff->s + ($diff->i * 60));
+
+        return max($secondsRemaining, 0);
+    }
+
+    public function getCountAnswered(): int
+    {
+        $countAnswered = 0;
+        foreach ($this->participants as $participant) {
+            if ($participant->hasAnsweredQuestion($this->currentQuestion)) {
+                $countAnswered++;
+            }
+        }
+
+        return $countAnswered;
+    }
+
+    public function isCurrentQuestionFinished(): bool
+    {
+        return $this->getSecondsRemaining() === 0 || $this->getCountAnswered() === $this->participants->count();
     }
 }

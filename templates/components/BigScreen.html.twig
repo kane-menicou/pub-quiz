@@ -1,0 +1,20 @@
+<div{{ attributes }} data-poll="delay(500)|$render">
+    <span>{{ this.quiz.secondsRemaining }}</span>
+    <span>{{ this.quiz.countAnswered }}/{{ this.quiz.participants.count }}</span>
+    {% if not this.quiz.isCurrentQuestionFinished %}
+        <h1>{{ this.question.question }}</h1>
+        {% for answers in this.question.answers|batch(2) %}
+            <ul class="list-group list-group-horizontal">
+                {% for answer in answers %}
+                    <li class="list-group-item">{{ answer.content }}</li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    {% else %}
+        <ui>
+            {% for participant in this.quiz.participants %}
+                <li>{{ participant.getAnswerToQuestion(this.quiz.currentQuestion) }}</li>
+            {% endfor %}
+        </ui>
+    {% endif %}
+</div>

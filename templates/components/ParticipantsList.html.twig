@@ -1,7 +1,7 @@
 <div {{ attributes }} data-poll="delay(500)|$render">
-    <ul>
+    <ul class="list-group">
         {% for participant in this.participants %}
-            <li>{{ participant.name }}</li>
+            <li class="list-group-item">{{ participant.name }}</li>
         {% endfor %}
     </ul>
 </div>

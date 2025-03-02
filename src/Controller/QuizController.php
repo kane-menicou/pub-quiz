@@ -62,7 +62,6 @@ class QuizController extends AbstractController
             return $this->redirectToRoute('app_question_view', ['quiz' => $quiz->getFriendlyId()]);
         }
 
-
         return $this->render('quiz/view.html.twig', ['quiz' => $quiz, 'startForm' => $form->createView()]);
     }
 }
