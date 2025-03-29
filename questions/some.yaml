@@ -1,11 +1,35 @@
 questions:
-    - question: 'test'
+    - question: 'Which Symfony component has stamps, envelopes and transports?'
       answers:
-          - content: 'something'
+          - content: 'symfony/mailer'
             correct: false
-          - content: 'something else'
-            correct: false
-          - content: 'another something (correct)'
+          - content: 'symfony/messenger'
             correct: true
-          - content: 'FOOBAR'
+          - content: 'symfony/event-dispatcher'
+            correct: false
+          - content: 'symfony/security-core'
+            correct: false
+    - question: 'Which of these is NOT the name of a real tech company?'
+      answers:
+          - content: 'Accepty'
+            correct: false
+          - content: 'Wealthify'
+            correct: false
+          - content: 'Loanify'
+            correct: false
+          - content: 'Investo'
+            correct: true
+          - content: 'Dogpile'
+            correct: false
+          - content: 'Jiglu'
+            correct: false
+    - question: 'What is the purpose of the #[When] Symfony attribute?'
+      answers:
+          - content: 'Schedules Symfony commands to run at specific times'
+            correct: false
+          - content: 'Defines services that should only be available in specific environments'
+            correct: true
+          - content: 'Defines security roles and access control'
+            correct: false
+          - content: 'Changes the Symfony cache expiration time based on the environment'
             correct: false
