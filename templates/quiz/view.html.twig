@@ -4,9 +4,9 @@
     {% if quiz.inLobby %}
         <h1>Join now using code: <span class="badge bg-primary">{{ quiz.friendlyId }}</span></h1>
 
-        <twig:ParticipantsList quiz="{{ quiz }}"/>
-
         <img src="{{ url('app_participant_new', {friendlyId: quiz.friendlyId})|asQrCode }}" style="width: 200px" alt="QR Code">
+
+        <twig:ParticipantsList quiz="{{ quiz }}"/>
 
         {{ form_start(startForm) }}
         {{ form_rest(startForm) }}

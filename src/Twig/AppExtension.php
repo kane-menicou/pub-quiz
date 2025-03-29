@@ -19,6 +19,6 @@ class AppExtension extends AbstractExtension
 
     public function getQrData(string $data): string
     {
-        return (new QRCode)->render($data);
+        return (new QRCode())->render($data);
     }
 }
