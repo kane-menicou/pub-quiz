@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route]
+    #[Route(name: 'homepage')]
     public function __invoke(): Response
     {
         return $this->redirectToRoute('app_participant_new');
