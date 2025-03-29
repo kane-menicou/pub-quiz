@@ -47,8 +47,6 @@ final class Leaderboard
             }
 
             sort($participantScores);
-
-
         }
 
         $result = [];
