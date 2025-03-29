@@ -21,7 +21,14 @@ class ParticipantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('quiz', TextType::class, ['constraints' => [new NotBlank(message: 'Code incorrect')]])
+            ->add(
+                'quiz',
+                TextType::class,
+                [
+                    'constraints' => [new NotBlank(message: 'Code incorrect')],
+                    'label' => 'Quiz Code',
+                ],
+            )
             ->add('name')
         ;
 
