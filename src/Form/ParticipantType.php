@@ -12,18 +12,11 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use function array_key_exists;
-use function is_string;
 
 class ParticipantType extends AbstractType
 {
-    public function __construct(private readonly QuizRepository $quizRepository)
-    {
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $quiz = is_string($options['friendlyId']) ? $this->quizRepository->findOneByFriendlyId($options['friendlyId']) : null;
         $builder
             ->add(
                 'quiz',
@@ -31,27 +24,15 @@ class ParticipantType extends AbstractType
                 [
                     'constraints' => [new NotBlank(message: 'Code incorrect')],
                     'label' => 'Quiz Code',
-                    'data' => $quiz,
-                    'disabled' => $quiz !== null,
-                    'data_class' => null,
+                    'disabled' => $options['friendlyId'] !== null,
                 ],
             )
             ->add('name')
         ;
-
-        $builder->get('quiz')->addViewTransformer(
-            new CallbackTransformer(
-                fn (?Quiz $quiz): ?string => $quiz?->getFriendlyId(),
-                fn (mixed $friendlyId): ?Quiz => $this->quizRepository->findOneByFriendlyId($friendlyId),
-            ),
-        );
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => Participant::class,
-            'friendlyId' => null,
-        ]);
+        $resolver->setDefaults(['friendlyId' => null]);
     }
 }
