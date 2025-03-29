@@ -48,12 +48,14 @@ final class Leaderboard
 
             sort($participantScores);
 
-            $result = [];
-            foreach ($participantScores as $participantId => $score) {
-                $result[] = ['participant' => $participantsById[$participantId], 'score' => $score];
-            }
 
-            return $result;
         }
+
+        $result = [];
+        foreach ($participantScores as $participantId => $score) {
+            $result[] = ['participant' => $participantsById[$participantId], 'score' => $score];
+        }
+
+        return $result;
     }
 }

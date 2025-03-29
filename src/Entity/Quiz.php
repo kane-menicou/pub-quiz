@@ -152,7 +152,7 @@ class Quiz
     {
         $diff = (new DateTimeImmutable())->diff($this->lastQuestionStart);
 
-        $secondsRemaining = Quiz::SECONDS_PER_QUESTION - ($diff->s + ($diff->i * 60));
+        $secondsRemaining = $this->secondsPerQuestion - ($diff->s + ($diff->i * 60));
 
         return max($secondsRemaining, 0);
     }
