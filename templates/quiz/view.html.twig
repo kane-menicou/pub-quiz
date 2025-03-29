@@ -6,6 +6,8 @@
 
         <twig:ParticipantsList quiz="{{ quiz }}"/>
 
+        <img src="{{ url('app_participant_new', {friendlyId: quiz.friendlyId})|asQrCode }}" style="width: 200px" alt="QR Code">
+
         {{ form_start(startForm) }}
         {{ form_rest(startForm) }}
         <div class="d-grid gap-2 col-6 mx-auto">

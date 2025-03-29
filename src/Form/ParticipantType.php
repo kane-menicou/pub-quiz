@@ -7,10 +7,13 @@ use App\Entity\Quiz;
 use App\Repository\QuizRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use function array_key_exists;
+use function is_string;
 
 class ParticipantType extends AbstractType
 {
@@ -20,6 +23,7 @@ class ParticipantType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $quiz = is_string($options['friendlyId']) ? $this->quizRepository->findOneByFriendlyId($options['friendlyId']) : null;
         $builder
             ->add(
                 'quiz',
@@ -27,6 +31,9 @@ class ParticipantType extends AbstractType
                 [
                     'constraints' => [new NotBlank(message: 'Code incorrect')],
                     'label' => 'Quiz Code',
+                    'data' => $quiz,
+                    'disabled' => $quiz !== null,
+                    'data_class' => null,
                 ],
             )
             ->add('name')
@@ -44,6 +51,7 @@ class ParticipantType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Participant::class,
+            'friendlyId' => null,
         ]);
     }
 }

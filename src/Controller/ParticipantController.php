@@ -12,15 +12,16 @@ use App\Repository\ParticipantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/participants')]
 class ParticipantController extends AbstractController
 {
     #[Route('/new')]
-    public function new(Request $request, ParticipantRepository $repository): Response
+    public function new(Request $request, ParticipantRepository $repository, #[MapQueryParameter] ?string $friendlyId): Response
     {
-        $form = $this->createForm(ParticipantType::class);
+        $form = $this->createForm(ParticipantType::class, null, ['friendlyId' => $friendlyId]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
